@@ -64,4 +64,8 @@ private:
 }  // namespace lineage
 }  // namespace vendor
 
+<<<<<<< HEAD
 #endif  // VENDOR_LINEAGE_BIOMETRICS_FINGERPRINT_INSCREEN_V1_0_FINGERPRINTINSCREEN_H
+=======
+#endif  // VENDOR_LINEAGE_BIOMETRICS_FINGERPRINT_INSCREEN_V1_0_FINGERPRINTINSCREEN_H
+>>>>>>> e9cf6a8... Revert "laurel_sprout: Test fod 1.1 hal"
