@@ -141,7 +141,7 @@ PRODUCT_COPY_FILES += \
     vendor/aosp/config/permissions/vendor.lineage.biometrics.fingerprint.inscreen.xml:system/etc/permissions/vendor.lineage.biometrics.fingerprint.inscreen.xml
 
 PRODUCT_PACKAGES += \
-    lineage.biometrics.fingerprint.inscreen@1.1-service.xiaomi_trinket
+    vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.xiaomi_laurel_sprout
 
 # FM
 PRODUCT_PACKAGES += \
