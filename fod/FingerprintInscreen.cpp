@@ -21,7 +21,6 @@
 #include <android-base/logging.h>
 #include <fstream>
 #include <cmath>
-#include <hardware_legacy/power.h>
 
 #include <cmath>
 #include <fstream>
@@ -41,9 +40,6 @@
 #define FOD_SENSOR_Y 1356
 #define FOD_SENSOR_SIZE 134
 
-#define HBM_OFF_DELAY 50
-#define HBM_ON_DELAY 250
-
 
 namespace {
 
@@ -60,11 +56,10 @@ namespace lineage {
 namespace biometrics {
 namespace fingerprint {
 namespace inscreen {
-namespace V1_1 {
+namespace V1_0 {
 namespace implementation {
 
 FingerprintInscreen::FingerprintInscreen() {
-    xiaomiDisplayFeatureService = IDisplayFeature::getService();
     xiaomiFingerprintService = IXiaomiFingerprint::getService();
 }
 
@@ -88,34 +83,14 @@ Return<void> FingerprintInscreen::onFinishEnroll() {
     return Void();
 }
 
-Return<int32_t> FingerprintInscreen::getHbmOffDelay() {
-    return HBM_OFF_DELAY;
-}
-
-Return<int32_t> FingerprintInscreen::getHbmOnDelay() {
-    return HBM_ON_DELAY;
-}
-
-Return<bool> FingerprintInscreen::supportsAlwaysOnHBM() {
-    return true;
-}
-
-Return<void> FingerprintInscreen::switchHbm(bool enabled) {
-    if (enabled) {
-        xiaomiDisplayFeatureService->setFeature(0, 11, 1, 3);
-    } else {
-        xiaomiDisplayFeatureService->setFeature(0, 11, 0, 3);
-    }
-    return Void();
-}
-
 Return<void> FingerprintInscreen::onPress() {
-    acquire_wake_lock(PARTIAL_WAKE_LOCK, LOG_TAG);
+    set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_ON);
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_630_FOD);
     return Void();
 }
 
 Return<void> FingerprintInscreen::onRelease() {
+    set(DISPPARAM_PATH, DISPPARAM_HBM_FOD_OFF);
     xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
     release_wake_lock(LOG_TAG);
     return Void();
@@ -168,7 +143,7 @@ Return<void> FingerprintInscreen::setCallback(const sp<IFingerprintInscreenCallb
 }
 
 }  // namespace implementation
-}  // namespace V1_1
+}  // namespace V1_0
 }  // namespace inscreen
 }  // namespace fingerprint
 }  // namespace biometrics
